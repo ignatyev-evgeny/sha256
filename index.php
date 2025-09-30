@@ -20,8 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return !is_array($value);
         });
         ksort($firstLevel);
-        $result = implode('', $firstLevel);
-        echo $result;
+        $concat = implode('', $firstLevel);
+        $hash = hash('sha256', $concat);
+        echo json_encode([
+            'concat' => $concat,
+            'sha256' => $hash,
+            'original' => $data['json']
+        ]);
         exit;
     }
 
