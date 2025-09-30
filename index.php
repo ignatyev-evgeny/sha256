@@ -16,8 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if(isset($data['json'])) {
-        $array = json_decode($data['json'], true);
-        $firstLevel = array_filter($array, function($value) {
+        $firstLevel = array_filter($data['json'], function($value) {
             return !is_array($value);
         });
         ksort($firstLevel);
