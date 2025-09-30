@@ -6,14 +6,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($input, true);
 
     if (isset($data['text'])) {
-        $hash = hash('sha256', $data['text']);
+        $text = trim($data['text']);
+        $hash = hash('sha256', $text);
         echo json_encode([
-            'original' => $data['text'],
+            'original' => $text,
             'sha256' => $hash
         ]);
-    } else {
-        echo json_encode(['error' => 'Текст не предоставлен']);
+        exit;
     }
+
+    if(isset($data['json'])) {
+        echo '<pre>';
+        printf(print_r($data['json'], true));
+        echo '</pre>';
+        exit;
+    }
+
 } else {
     echo json_encode(['error' => 'Используйте POST запрос']);
 }
