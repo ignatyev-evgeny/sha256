@@ -16,9 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if(isset($data['json'])) {
-        echo '<pre>';
-        printf(print_r($data['json'], true));
-        echo '</pre>';
+        $array = json_decode($data['json'], true);
+        $firstLevel = array_filter($array, function($value) {
+            return !is_array($value);
+        });
+        ksort($firstLevel);
+        $result = implode('', $firstLevel);
+        echo $result;
         exit;
     }
 
